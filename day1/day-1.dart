@@ -2,8 +2,7 @@
 import 'dart:io';
 
 Future<void> main() async {
-
-  var input = File('input.txt');
+  var input = File('day1/input.txt');
   var lines = await input.readAsLines();
 
   List<int> left = []; 
@@ -14,11 +13,21 @@ Future<void> main() async {
     left.add(int.parse(lAndR[0]));
     right.add(int.parse(lAndR[1]));
   }); 
-  
 
-  // var left = [3, 4, 2, 1, 3, 3];
+  print('Part 1: ');
+  print(part1(left, right));
+
+  print('\n');
+
+  print('Part 2: ');
+  print(part2(left, right));
+}
+
+int part1(
+  List<int> left,
+  List<int> right
+) {
   left.sort();
-  // var right = [4, 3, 5, 3, 9, 3];
   right.sort();
 
   var result = 0;
@@ -26,7 +35,22 @@ Future<void> main() async {
   for (var i = 0 ; i < left.length ; i++) {
       result += (left[i] - (right[i])).abs();
   }
-  print(result);
+
+  return result;
 }
 
+int part2(
+  List<int> left,
+  List<int> right
+) {
+  var result = 0;
 
+    for (var i = 0 ; i < left.length ; i++) {
+      var found = right.where((value) {
+        return value == left[i];
+      });
+      result += left[i] * found.length;
+    }
+
+  return result;
+}
